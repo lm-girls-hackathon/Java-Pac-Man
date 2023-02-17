@@ -29,19 +29,9 @@ public class Item{
 
 	// method: Default constructor - see packed constructors comments for a description of parameters.
 	public Item(){
-		this(200, 300, "images/forest/objects/Tree_2.png", 2);
+		this(200, 0, "images/objects/Fruit_Apple.png");
 	}
 
-	// method: Item constructor
-	// description: Initialize a new Item object.
-	// parameters: x_coordinate - the initial x-coordinate for Character.
-	//			   y_coordinate - the initial y-coordinate for Character.
-	//             imageString - The image path for the image that you want to draw. Make sure that any images that
-	//                           you would like to draw are in your project and that you give the full path relative to 
-	//                           your project's src folder.
-	public Item(int x_coordinate, int y_coordinate, String imageString){
-		this(x_coordinate, y_coordinate, imageString, 2);
-	}
 	
 	// method: Item constructor
 	// description: Initialize a new Item object.
@@ -52,13 +42,13 @@ public class Item{
 	//                           your project's src folder.
 	//             imageScale - imageScale is used to make the image bigger or smaller on the Panel. The bigger
 	// 						    the imageScale, the smaller the image will be.
-	public Item(int x_coordinate, int y_coordinate, String imageString, int imageScale){
+	public Item(int x_coordinate, int y_coordinate, String imageString){
 
 		this.x_coordinate = x_coordinate;						// Initial coordinates for the Item.
 		this.y_coordinate = y_coordinate; 
 
-		x_direction = 1;
-		y_direction = 0;
+		x_direction = 0;
+		y_direction = 1;
 		
 		ClassLoader cldr = this.getClass().getClassLoader();	// These lines of code load the picture.
 		String imagePath = imageString;							
@@ -66,24 +56,12 @@ public class Item{
 		
 		image = new ImageIcon(imageURL);
 		
-		Image scaled = image.getImage().getScaledInstance(image.getIconWidth() / imageScale, 
-				image.getIconHeight() / imageScale, Image.SCALE_SMOOTH);
+		Image scaled = image.getImage().getScaledInstance(image.getIconWidth() * 3, 
+				image.getIconHeight() * 3, Image.SCALE_SMOOTH);
 		
 		image = new ImageIcon(scaled);	
 	}
 	
-	// method: collision
-	// description: This method will return true if the Item collides with the parameter Item.
-	// return: boolean - true if the two items intersect or collide with each other, otherwise false. 
-	public void changeScale(int imageScale) {
-		
-		if(image.getIconWidth() > imageScale && image.getIconHeight() > imageScale) {
-			Image scaled = image.getImage().getScaledInstance(image.getIconWidth() / imageScale, 
-				image.getIconHeight() / imageScale, Image.SCALE_SMOOTH);
-		
-			image = new ImageIcon(scaled);
-		}
-	}
 	
 	// method: getBounds
 	// description: This method will return the coordinates of a rectangle that would be drawn around the 

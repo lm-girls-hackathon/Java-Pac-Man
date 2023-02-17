@@ -12,17 +12,10 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
+import java.util.ArrayList;
+
 import javax.swing.JPanel;
 import javax.swing.Timer;
-import java.awt.Rectangle;
 
 public class GraphicsPanel extends JPanel implements KeyListener{
 
@@ -30,12 +23,15 @@ public class GraphicsPanel extends JPanel implements KeyListener{
 
 	private PacMan pacman;					// create a Sprite object
 
+	private ArrayList<Item> fruit;
 	
-	public GraphicsPanel(){
-
-		pacman = new PacMan(400, 750);			
-		// The Sprite constuctor has two parameter - - the x coordinate and y coordinate
-
+	public GraphicsPanel(){		
+		// The PacMan constuctor has two parameter - - the x coordinate and y coordinate
+		pacman = new PacMan(400, 750);
+		
+		fruit = new ArrayList<>();
+		fruit.add(new Item());
+		
 		setPreferredSize(new Dimension(800, 800));  
 		// This line of code sets the dimension of the panel equal to the dimensions
 		// of the background image.
@@ -56,7 +52,15 @@ public class GraphicsPanel extends JPanel implements KeyListener{
 	// parameters: Graphics g - This object is used to draw your images onto the graphics panel.
 	public void paintComponent(Graphics g){
 		Graphics2D g2 = (Graphics2D) g;
+		
+		g2.setColor(Color.black);
+		g2.fillRect(0, 0, 800, 800);
+		
 		pacman.draw(g2, this);
+		
+		for(Item f: fruit) {
+			f.draw(g2, this);
+		}
 	}
 
 	// method:clock
@@ -67,7 +71,17 @@ public class GraphicsPanel extends JPanel implements KeyListener{
 		// You can move any of your objects by calling their move methods.
 		pacman.move(this);
 
+		// move each fruit
+		for(Item f: fruit) {
+			f.move(this);;
+		}
 
+		// remove the fruit if it reaches the bottom of the screen
+		for(int i = fruit.size()-1; i >= 0; i--)
+			if(fruit.get(i).y_coordinate > 800)
+				fruit.remove(i);
+		
+		
 		// You can also check to see if two objects intersect like this. In this case if the sprite collides with the
 		// item, the item will get smaller. 
 //		if(pacman.collision(item) && pacman.getY() < item.getY()) {

@@ -8,7 +8,10 @@
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Rectangle;
+
+import javax.swing.ImageIcon;
 
 public class PacMan {
 
@@ -48,6 +51,7 @@ public class PacMan {
 
 		jumpCounter = -1;
 		imageResource = new ImageResource("images/pacman/");
+	
 	}
 
 	public boolean collision(PacMan otherSprite) {
